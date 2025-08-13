@@ -30,3 +30,5 @@ init-deps:
 	go get gopkg.in/yaml.v3
 	go get -u go.uber.org/zap
 	go get github.com/redis/go-redis/v9
+	go get go.mongodb.org/mongo-driver/v2/mongo
+

@@ -1,34 +1,44 @@
 package config
 
 import (
-	"os"
+	"log"
+	"strings"
 
-	"gopkg.in/yaml.v3"
+	"github.com/spf13/viper"
 )
 
 type Config struct {
-	Redis RedisConfig `yaml:"redis"`
-	Mongo MongoConfig `yaml:"mongo"`
+	Redis RedisConfig `mapstructure:"redis"`
+	Mongo MongoConfig `mapstructure:"mongo"`
 }
 
 type RedisConfig struct {
-	Host string `yaml:"host"`
+	Host string `mapstructure:"host"`
 }
 
 type MongoConfig struct {
-	URI      string `yaml:"uri"`
-	Database string `yaml:"database"`
+	URI      string `mapstructure:"uri"`
+	Database string `mapstructure:"database"`
 }
 
 func InitConfig() Config {
-	yamlFile, err := os.ReadFile("configs/config.yml")
-	if err != nil {
-		panic(err.Error())
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath("./configs")
+	viper.AddConfigPath(".")
+
+	viper.SetEnvPrefix("BADMINTON")
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	viper.AutomaticEnv()
+
+	if err := viper.ReadInConfig(); err != nil {
+		log.Printf("Error reading config file: %v", err)
 	}
+
 	var config Config
-	err = yaml.Unmarshal(yamlFile, &config)
-	if err != nil {
-		panic(err.Error())
+	if err := viper.Unmarshal(&config); err != nil {
+		log.Fatalf("Unable to decode config into struct: %v", err)
 	}
+
 	return config
 }
