@@ -27,18 +27,19 @@ func InitConfig() Config {
 	viper.AddConfigPath("./configs")
 	viper.AddConfigPath(".")
 
-	viper.SetEnvPrefix("BADMINTON")
-	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-	viper.AutomaticEnv()
-
 	if err := viper.ReadInConfig(); err != nil {
 		log.Printf("Error reading config file: %v", err)
 	}
+
+	viper.SetEnvPrefix("BADMINTON")
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+	viper.AutomaticEnv()
 
 	var config Config
 	if err := viper.Unmarshal(&config); err != nil {
 		log.Fatalf("Unable to decode config into struct: %v", err)
 	}
 
+	log.Printf("Final config URI: %v", config.Mongo.URI)
 	return config
 }
