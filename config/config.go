@@ -8,10 +8,14 @@ import (
 )
 
 type Config struct {
+	App   AppConfig   `mapstructure:"app"`
 	Redis RedisConfig `mapstructure:"redis"`
 	Mongo MongoConfig `mapstructure:"mongo"`
 }
 
+type AppConfig struct {
+	AllowOrigins []string `mapstructure:"allow_origins"`
+}
 type RedisConfig struct {
 	Host string `mapstructure:"host"`
 }

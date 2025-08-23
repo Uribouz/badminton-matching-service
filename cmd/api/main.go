@@ -32,7 +32,7 @@ func main() {
 	r := gin.Default()
 	r.Use(middleware.LoggingMiddleWare(logger))
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"*"},
+		AllowOrigins: config.App.AllowOrigins, //TODO: make this secure
 	}))
 	var (
 		deviceRepo    = device.NewMongoRepository(database.Database)
