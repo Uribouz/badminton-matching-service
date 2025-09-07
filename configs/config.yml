@@ -1,6 +1,7 @@
 app:
   allow_origins: [
     "http://127.0.0.1",
+    "https://badminton-kub.netlify.app",
   ]
 
 redis:
