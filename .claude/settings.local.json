@@ -4,7 +4,8 @@
       "Bash(mkdir:*)",
       "Bash(mv:*)",
       "Bash(go run:*)",
-      "Bash(go:*)"
+      "Bash(go:*)",
+      "Bash(swag init:*)"
     ],
     "deny": []
   }

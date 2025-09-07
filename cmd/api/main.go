@@ -13,9 +13,28 @@ import (
 	"badminton-service/domain/player"
 	"context"
 
+	_ "badminton-service/docs"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
+
+// @title           Badminton Matching Service API
+// @version         1.0
+// @description     A service for managing badminton matches, players, and events.
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name   API Support
+// @contact.url    http://www.swagger.io/support
+// @contact.email  support@swagger.io
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8080
+// @BasePath  /
 
 func main() {
 	var (
@@ -75,6 +94,8 @@ func main() {
 	partnerGroup := r.Group("/partners")
 	partnerGroup.GET("/:event_id/:player_name", partnerHandler.Get)
 	partnerGroup.POST("", partnerHandler.Post)
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	r.Run(":8080")
 }
